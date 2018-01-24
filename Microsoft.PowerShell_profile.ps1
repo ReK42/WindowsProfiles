@@ -1,9 +1,9 @@
 # git clone https://github.com/Pscx/Pscx.git
-# git checkout powershell-core-compatibility
+# git checkout v3.3.2
 Import-Module Pscx
 
 # git clone https://github.com/jasonmarcher/PowerTab
-# git checkout v0.99.6.0
+# git checkout powershell-core-compatibility
 Import-Module PowerTab
 
 Function Get-UserPrincipalName {

@@ -1,10 +1,10 @@
-# git clone https://github.com/Pscx/Pscx.git
-# git checkout v3.3.2
+# https://github.com/Pscx/Pscx.git
+# Use latest release tag, e.g. v3.3.2
 Import-Module Pscx
 
-# git clone https://github.com/jasonmarcher/PowerTab
-# git checkout powershell-core-compatibility
-Import-Module PowerTab
+# https://github.com/jasonmarcher/PowerTab
+# Use branch powershell-core-compatibility
+Import-Module PowerTab -ArgumentList "$($Env:UserProfile)\Documents\WindowsPowerShell\PowerTabConfig.xml"
 
 Function Get-UserPrincipalName {
 	<#

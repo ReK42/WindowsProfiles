@@ -7,14 +7,14 @@ Set-Alias vim "$($Env:ProgramFiles)\Vim\vim82\vim.exe" -Option ReadOnly
 Function Prompt() {
     $AdminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
     $Identity = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()
-    $PromptPWD = $PWD.ProviderPath.replace($Env:UserProfile, "~")
+    $PromptCWD = $PWD.ProviderPath.replace($Env:UserProfile, "~")
 
     Write-Host "[" -NoNewLine
     Write-Host $Env:UserName -NoNewLine -ForegroundColor "Green"
     Write-Host "@" -NoNewLine
     Write-Host $Env:ComputerName -NoNewLine -ForegroundColor "Green"
     Write-Host " " -NoNewLine
-    Write-Host $PromptPWD -NoNewLine -ForegroundColor "Blue"
+    Write-Host $PromptCWD -NoNewLine -ForegroundColor "Blue"
     Write-Host "]" -NoNewLine
     if ($Identity.IsInRole($AdminRole)) {
         Write-Host "#" -NoNewLine -ForegroundColor "Red"

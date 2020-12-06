@@ -91,15 +91,15 @@
     },
     "schemes":
     [
-		{
-			"name": "Solarized Dark",
+        {
+            "name": "Solarized Dark",
 
-			"background": "#002b36",
-			"foreground": "#839496",
+            "background": "#002b36",
+            "foreground": "#839496",
             "cursorColor": "#fdf6e3",
             "selectionBackground": "#fdf6e3",
 
-			"black": "#002b36",
+            "black": "#002b36",
             "blue": "#839496",
             "cyan": "#93a1a1",
             "green": "#586e75",
@@ -108,15 +108,15 @@
             "white": "#fdf6e3",
             "yellow": "#657b83",
 
-			"brightBlack": "#073642",
-			"brightBlue": "#268bd2",
-			"brightCyan": "#2aa198",
-			"brightGreen": "#859900",
-			"brightPurple": "#d33682",
-			"brightRed": "#dc322f",
-			"brightWhite": "#eee8d5",
-			"brightYellow": "#b58900"
-		},
+            "brightBlack": "#073642",
+            "brightBlue": "#268bd2",
+            "brightCyan": "#2aa198",
+            "brightGreen": "#859900",
+            "brightPurple": "#d33682",
+            "brightRed": "#dc322f",
+            "brightWhite": "#eee8d5",
+            "brightYellow": "#b58900"
+        },
         {
             "name": "Solarized Light",
 

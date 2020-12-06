@@ -2,7 +2,7 @@ Set-Alias sudo gsudo -Option ReadOnly  # https://github.com/gerardog/gsudo
 Set-Alias grep Select-String -Option ReadOnly
 Set-Alias ll Get-ChildItem -Option ReadOnly
 Set-Alias sublime "$($Env:ProgramFiles)\Sublime Text 3\sublime_text.exe" -Option ReadOnly
-Set-Alias vim "$($Env:ProgramFiles)\Vim\vim82\vim.exe"
+Set-Alias vim "$($Env:ProgramFiles)\Vim\vim82\vim.exe" -Option ReadOnly
 
 Function Prompt() {
     $AdminRole = [Security.Principal.WindowsBuiltInRole]::Administrator

@@ -1,0 +1,154 @@
+{
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "showTerminalTitleInTitlebar": true,
+    "theme": "dark",
+    "copyOnSelect": true,
+    "copyFormatting": true,
+    "profiles":
+    {
+        "defaults":
+        {
+            "startingDirectory": "%UserProfile%",
+            "historySize": 50000,
+            "snapOnInput": true,
+            "colorScheme": "Solarized Dark",
+            "fontFace": "Cascadia Mono",
+            "fontSize": 12,
+            "useAcrylic": false
+        },
+        "list":
+        [
+            {
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "name": "Windows PowerShell",
+                "tabColor": "#477dda",
+                "hidden": false,
+                "commandline": "powershell"
+            },
+            {
+                "guid": "{82af09fa-ed0c-4da7-a93f-f3b15c940380}",
+                "name": "Windows PowerShell (Admin)",
+                "icon": "%AppData%\\uac.png",
+                "tabColor": "#dc322f",
+                "hidden": false,
+                "commandline": "gsudo powershell"
+            },
+            {
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "name": "Command Prompt",
+                "tabColor": "#000",
+                "hidden": false,
+                "commandline": "cmd"
+            },
+            {
+                "guid": "{79797144-2b93-4f25-bd03-f86e614d7000}",
+                "name": "Command Prompt (Admin)",
+                "icon": "%AppData%\\uac.png",
+                "tabColor": "#dc322f",
+                "hidden": false,
+                "commandline": "gsudo cmd"
+            },
+            {
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure",
+                "hidden": false
+            },
+            {
+                "guid": "{2999f8e3-a464-4e07-864b-489ca1a99195}",
+                "name": "Python 3.9",
+                "icon": "%AppData%\\python.png",
+                "tabColor": "#1e415e",
+                "hidden": false,
+                "commandline": "py -3.9"
+            },
+            {
+                "guid": "{5073f709-2864-45db-bbdd-28ec087ebe56}",
+                "name": "Python 3.8",
+                "icon": "%AppData%\\python.png",
+                "tabColor": "#1e415e",
+                "hidden": false,
+                "commandline": "py -3.8"
+            },
+            {
+                "guid": "{8da9050f-3023-453c-aa25-12791965f0de}",
+                "name": "Python 3.7",
+                "icon": "%AppData%\\python.png",
+                "tabColor": "#1e415e",
+                "hidden": false,
+                "commandline": "py -3.7"
+            },
+            {
+                "guid": "{a75c1ccf-e950-4583-a3b3-f21fe0c55549}",
+                "name": "Python 2.7",
+                "icon": "%AppData%\\python.png",
+                "tabColor": "#1e415e",
+                "hidden": false,
+                "commandline": "py -2.7"
+            }
+        ]
+    },
+    "schemes":
+    [
+		{
+			"name": "Solarized Dark",
+
+			"background": "#002b36",
+			"foreground": "#839496",
+            "cursorColor": "#fdf6e3",
+            "selectionBackground": "#fdf6e3",
+
+			"black": "#002b36",
+            "blue": "#839496",
+            "cyan": "#93a1a1",
+            "green": "#586e75",
+            "purple": "#6c71c4",
+            "red": "#cb4b16",
+            "white": "#fdf6e3",
+            "yellow": "#657b83",
+
+			"brightBlack": "#073642",
+			"brightBlue": "#268bd2",
+			"brightCyan": "#2aa198",
+			"brightGreen": "#859900",
+			"brightPurple": "#d33682",
+			"brightRed": "#dc322f",
+			"brightWhite": "#eee8d5",
+			"brightYellow": "#b58900"
+		},
+        {
+            "name": "Solarized Light",
+
+            "background": "#fdf6e3",
+            "foreground": "#657b83",
+            "cursorColor": "#002b36",
+            "selectionBackground": "#002b36",
+
+            "black": "#002b36",
+            "blue": "#839496",
+            "cyan": "#93a1a1",
+            "green": "#586e75",
+            "purple": "#6c71c4",
+            "red": "#cb4b16",
+            "white": "#fdf6e3",
+            "yellow": "#657b83",
+
+            "brightBlack": "#073642",
+            "brightBlue": "#268bd2",
+            "brightCyan": "#2aa198",
+            "brightGreen": "#859900",
+            "brightPurple": "#d33682",
+            "brightRed": "#dc322f",
+            "brightWhite": "#eee8d5",
+            "brightYellow": "#b58900"
+        }
+    ],
+    "keybindings":
+    [
+        {"command": {"action": "copy", "singleLine": false}, "keys": "ctrl+shift+c"},
+        {"command": "paste", "keys": "ctrl+shift+v"},
+        {"command": "find", "keys": "ctrl+shift+f"},
+        {"command": {"action": "splitPane", "split": "auto", "splitMode": "duplicate"}, "keys": "alt+shift+d"}
+    ]
+}

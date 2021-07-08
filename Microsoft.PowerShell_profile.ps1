@@ -1,7 +1,13 @@
+# Chocolatey profile
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
+
 Set-Alias sudo gsudo -Option ReadOnly  # https://github.com/gerardog/gsudo
 Set-Alias grep Select-String -Option ReadOnly
 Set-Alias ll Get-ChildItem -Option ReadOnly
-Set-Alias sublime "$($Env:ProgramFiles)\Sublime Text 3\sublime_text.exe" -Option ReadOnly
+Set-Alias sublime "$($Env:ProgramFiles)\Sublime Text\sublime_text.exe" -Option ReadOnly
 Set-Alias vim "$($Env:ProgramFiles)\Vim\vim82\vim.exe" -Option ReadOnly
 
 Function Prompt() {
@@ -23,6 +29,32 @@ Function Prompt() {
     }
     return " "
 }
+
+# Configure highlighting for dark terminal themes
+$Host.PrivateData.ErrorForegroundColor = "Red"
+$Host.PrivateData.WarningForegroundColor = "Yellow"
+$Host.PrivateData.DebugForegroundColor = "Green"
+$Host.PrivateData.VerboseForegroundColor = "Blue"
+$Host.PrivateData.ProgressForegroundColor = "Gray"
+$Host.PrivateData.ErrorBackgroundColor = "DarkGray"
+$Host.PrivateData.WarningBackgroundColor = "DarkGray"
+$Host.PrivateData.DebugBackgroundColor = "DarkGray"
+$Host.PrivateData.VerboseBackgroundColor = "DarkGray"
+$Host.PrivateData.ProgressBackgroundColor = "Cyan"
+$PSReadLineOptions = Get-PSReadLineOption
+$PSReadLineOptions.CommandColor = "Yellow"
+$PSReadLineOptions.ContinuationPromptColor = "DarkBlue"
+$PSReadLineOptions.DefaultTokenColor = "DarkBlue"
+$PSReadLineOptions.EmphasisColor = "Cyan"
+$PSReadLineOptions.ErrorColor = "Red"
+$PSReadLineOptions.KeywordColor = "Green"
+$PSReadLineOptions.MemberColor = "DarkCyan"
+$PSReadLineOptions.NumberColor = "DarkCyan"
+$PSReadLineOptions.OperatorColor = "DarkGreen"
+$PSReadLineOptions.ParameterColor = "DarkGreen"
+$PSReadLineOptions.StringColor = "Blue"
+$PSReadLineOptions.TypeColor = "DarkYellow"
+$PSReadLineOptions.VariableColor = "Green"
 
 Function Compare-FileHash {
     <#

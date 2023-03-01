@@ -213,3 +213,39 @@ Function Get-ContentTail {
     }
 }
 Set-Alias tail Get-ContentTail -Option ReadOnly
+
+Function Open-WTSSH {
+    <#
+    .SYNOPSIS
+    Launch OpenSSH in a Windows Terminal tab
+    #>
+
+    $Title = 'OpenSSH'
+    $Skip = $false
+    ForEach($arg in $args) {
+        if($Skip) {
+            $Skip = $false
+            Continue
+        }
+        if($arg.StartsWith('-')) {
+            $Skip = $true
+            Continue
+        }
+        if($arg.Contains('@')) {
+            $Title += ": $(($arg -split '@')[1])"
+        } else {
+            $Title += ": $arg"
+        }
+        Break
+    }
+
+    $ArgumentList = @(
+        "--window 0",
+        "new-tab",
+        "--profile OpenSSH",
+        "--title `"$Title`"",
+        "ssh $args"
+    )
+    Start-Process wt -ArgumentList $ArgumentList
+}
+Set-Alias wtssh Open-WTSSH -Option ReadOnly

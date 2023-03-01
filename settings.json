@@ -1,12 +1,10 @@
 {
+    "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "copyFormatting": "all",
-    "copyOnSelect": true,
-    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-    "keybindings":
+    "actions": 
     [
         {
-            "command":
+            "command": 
             {
                 "action": "copy",
                 "singleLine": false
@@ -22,7 +20,7 @@
             "keys": "ctrl+shift+f"
         },
         {
-            "command":
+            "command": 
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -31,19 +29,31 @@
             "keys": "alt+shift+d"
         }
     ],
-    "profiles":
+    "copyFormatting": "none",
+    "copyOnSelect": true,
+    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "profiles": 
     {
-        "defaults":
+        "defaults": 
         {
+            "bellStyle": 
+            [
+                "audible",
+                "window",
+                "taskbar"
+            ],
             "colorScheme": "Mariana",
-            "fontFace": "Cascadia Mono",
-            "fontSize": 12,
+            "font": 
+            {
+                "face": "Cascadia Mono",
+                "size": 12.0
+            },
             "historySize": 50000,
             "snapOnInput": true,
             "startingDirectory": "%UserProfile%",
             "useAcrylic": false
         },
-        "list":
+        "list": 
         [
             {
                 "commandline": "powershell",
@@ -61,12 +71,6 @@
                 "tabColor": "#DC322F"
             },
             {
-                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": false,
-                "name": "Azure Cloud Shell",
-                "source": "Windows.Terminal.Azure"
-            },
-            {
                 "commandline": "cmd",
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
@@ -82,20 +86,17 @@
                 "tabColor": "#DC322F"
             },
             {
-                "guid": "{8d89a9a6-1eea-50a1-b236-d45513f08881}",
+                "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
                 "hidden": false,
-                "name": "CentOS8",
-                "icon": "%AppData%\\centos.png",
-                "tabColor": "#262577",
+                "icon": "%AppData%\\debian.png",
+                "name": "Debian",
                 "source": "Windows.Terminal.Wsl"
             },
             {
-                "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
                 "hidden": false,
-                "name": "Debian",
-                "icon": "%AppData%\\debian.png",
-                "tabColor": "#CE0056",
-                "source": "Windows.Terminal.Wsl"
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
             },
             {
                 "commandline": "py -3.9",
@@ -106,22 +107,6 @@
                 "tabColor": "#1E415E"
             },
             {
-                "commandline": "py -3.8",
-                "guid": "{5073f709-2864-45db-bbdd-28ec087ebe56}",
-                "hidden": false,
-                "icon": "%AppData%\\python.png",
-                "name": "Python 3.8",
-                "tabColor": "#1E415E"
-            },
-            {
-                "commandline": "py -3.7",
-                "guid": "{8da9050f-3023-453c-aa25-12791965f0de}",
-                "hidden": false,
-                "icon": "%AppData%\\python.png",
-                "name": "Python 3.7",
-                "tabColor": "#1E415E"
-            },
-            {
                 "commandline": "py -2.7",
                 "guid": "{a75c1ccf-e950-4583-a3b3-f21fe0c55549}",
                 "hidden": false,
@@ -129,15 +114,23 @@
                 "name": "Python 2.7",
                 "tabColor": "#1E415E"
             },
-                        {
-                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
-                "hidden": false,
-                "name": "Git Bash",
-                "source": "Git"
+            {
+                "altGrAliasing": true,
+                "antialiasingMode": "grayscale",
+                "closeOnExit": "always",
+                "commandline": "ssh",
+                "cursorShape": "bar",
+                "guid": "{d8f02a8f-a2ff-492b-8a04-ff31ae87c89f}",
+                "hidden": true,
+                "icon": "%AppData%/ssh.png",
+                "name": "OpenSSH",
+                "padding": "8, 8, 8, 8",
+                "suppressApplicationTitle": true,
+                "tabColor": "#477DDA"
             }
         ]
     },
-    "schemes":
+    "schemes": 
     [
         {
             "background": "#0C0C0C",
@@ -371,5 +364,9 @@
         }
     ],
     "showTerminalTitleInTitlebar": true,
-    "theme": "system"
+    "theme": "system",
+    "themes": [],
+    "trimBlockSelection": true,
+    "useAcrylicInTabRow": false,
+    "windowingBehavior": "useAnyExisting"
 }

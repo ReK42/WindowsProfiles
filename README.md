@@ -1,4 +1,4 @@
-# Windows Terminal/PowerShell Profiles
+# Windows Terminal, PowerShell and OpenSSH Profiles
 ## Dependencies
 - PowerShell 5.1
 - [Windows Terminal](https://aka.ms/terminal)

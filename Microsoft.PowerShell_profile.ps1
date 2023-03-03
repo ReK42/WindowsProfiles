@@ -249,3 +249,42 @@ Function Open-WTSSH {
     Start-Process wt -ArgumentList $ArgumentList
 }
 Set-Alias wtssh Open-WTSSH -Option ReadOnly
+
+Function Open-WTCOM {
+    <#
+    .SYNOPSIS
+    Launch WSL minicom in a Windows Terminal tab
+    #>
+
+    param (
+        [Parameter(
+            Mandatory=$false,
+            ValueFromPipeline=$true,
+            HelpMessage='COM port to connect to'
+        )][ValidateNotNullOrEmpty()][Int]$Port = 4,
+        [Parameter(
+            Mandatory=$false,
+            HelpMessage='WSL distribution to launch'
+        )][ValidateNotNullOrEmpty()][System.String]$Distribution = 'debian'
+    )
+
+    # Get a list of available WSL distributions
+    $Distributions = @()
+    (wsl --list --verbose) | Select-Object -Skip 1 | Where-Object Length -GT 1 | ForEach-Object {
+        $Distributions += ($_.Split(' ') | Where-Object Length -GT 1)[1].ToLower()
+    }
+
+    # Make sure the requested distribution is availble
+    if($Distributions -contains $Distribution.ToLower()) {
+        $ArgumentList = @(
+            "new-tab",
+            "--profile minicom",
+            "--title COM$Port",
+            "wsl --distribution $Distribution minicom --color=on --device /dev/ttyS$Port"
+        )
+        Start-Process wt -ArgumentList $ArgumentList
+    } else {
+        Write-Error "Distribution $Distribution not found"
+    }
+}
+Set-Alias wtcom Open-WTCOM -Option ReadOnly

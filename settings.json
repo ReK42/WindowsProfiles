@@ -127,6 +127,20 @@
                 "padding": "8, 8, 8, 8",
                 "suppressApplicationTitle": true,
                 "tabColor": "#477DDA"
+            },
+            {
+                "altGrAliasing": true,
+                "antialiasingMode": "grayscale",
+                "closeOnExit": "always",
+                "commandline": "wsl --distribution debian minicom --color=on",
+                "cursorShape": "bar",
+                "guid": "{04265ebb-d4ea-442d-94c2-b6a27474d891}",
+                "hidden": true,
+                "icon": "%AppData%/minicom.png",
+                "name": "minicom",
+                "padding": "8, 8, 8, 8",
+                "suppressApplicationTitle": true,
+                "tabColor": "#477DDA"
             }
         ]
     },

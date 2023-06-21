@@ -8,3 +8,10 @@ HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,
 KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1,diffie-hellman-group-exchange-sha1
 MACs +hmac-sha1-96,hmac-md5,hmac-md5-96,hmac-sha1-96-etm@openssh.com,hmac-md5-etm@openssh.com,hmac-md5-96-etm@openssh.com
 Ciphers +aes128-cbc,aes192-cbc,aes256-cbc,3des-cbc
+
+#
+# Host Entries
+#
+
+Host *.example.com
+    User example

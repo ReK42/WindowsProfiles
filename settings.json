@@ -1,10 +1,10 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
-            "command": 
+            "command":
             {
                 "action": "copy",
                 "singleLine": false
@@ -20,7 +20,7 @@
             "keys": "ctrl+shift+f"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -32,18 +32,17 @@
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-    "profiles": 
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
-            "bellStyle": 
+            "bellStyle":
             [
-                "audible",
                 "window",
                 "taskbar"
             ],
             "colorScheme": "Mariana",
-            "font": 
+            "font":
             {
                 "face": "Cascadia Mono",
                 "size": 12.0
@@ -53,7 +52,7 @@
             "startingDirectory": "%UserProfile%",
             "useAcrylic": false
         },
-        "list": 
+        "list":
         [
             {
                 "commandline": "powershell",
@@ -86,65 +85,80 @@
                 "tabColor": "#DC322F"
             },
             {
+                "closeOnExit": "always",
+                "commandline": "py",
+                "guid": "{2999f8e3-a464-4e07-864b-489ca1a99195}",
+                "hidden": false,
+                "icon": "%AppData%\\python.png",
+                "name": "Python",
+                "tabColor": "#1E415E"
+            },
+            {
+                "closeOnExit": "always",
+                "commandline": "ssh",
+                "guid": "{d8f02a8f-a2ff-492b-8a04-ff31ae87c89f}",
+                "hidden": true,
+                "icon": "%AppData%/ssh.png",
+                "name": "OpenSSH",
+                "suppressApplicationTitle": true,
+                "tabColor": "#477DDA"
+            },
+            {
+                "closeOnExit": "always",
+                "commandline": "wsl --distribution debian minicom --color=on",
+                "guid": "{04265ebb-d4ea-442d-94c2-b6a27474d891}",
+                "hidden": true,
+                "icon": "%AppData%/minicom.png",
+                "name": "minicom",
+                "suppressApplicationTitle": true,
+                "tabColor": "#477DDA"
+            },
+            {
+                "closeOnExit": "always",
+                "guid": "{4edc856f-af72-5cd2-9ad9-97e18d27846b}",
+                "hidden": false,
+                "icon": "https://github.com/rocky-linux/rocky-logos/raw/r9/pixmaps/fedora-logo-sprite.png",
+                "name": "Rocky",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "closeOnExit": "always",
+                "commandline": "ubuntu.exe",
+                "guid": "{f2ecc425-5c32-4464-887e-6266db64a0b6}",
+                "hidden": false,
+                "icon": "https://assets.ubuntu.com/v1/49a1a858-favicon-32x32.png",
+                "name": "Ubuntu",
+                "tabTitle": "Ubuntu"
+            },
+            {
+                "closeOnExit": "always",
                 "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
                 "hidden": false,
-                "icon": "%AppData%\\debian.png",
+                "icon": "https://www.debian.org/logos/openlogo-nd-75.png",
                 "name": "Debian",
                 "source": "Windows.Terminal.Wsl"
             },
             {
                 "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": false,
+                "hidden": true,
                 "name": "Azure Cloud Shell",
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "commandline": "py -3.9",
-                "guid": "{2999f8e3-a464-4e07-864b-489ca1a99195}",
+                "guid": "{88cb020a-b12a-5662-8c06-fd2072970994}",
                 "hidden": false,
-                "icon": "%AppData%\\python.png",
-                "name": "Python 3.9",
-                "tabColor": "#1E415E"
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "commandline": "py -2.7",
-                "guid": "{a75c1ccf-e950-4583-a3b3-f21fe0c55549}",
+                "guid": "{ffce01ef-7822-5b3c-ba4d-29fb783295b4}",
                 "hidden": false,
-                "icon": "%AppData%\\python.png",
-                "name": "Python 2.7",
-                "tabColor": "#1E415E"
-            },
-            {
-                "altGrAliasing": true,
-                "antialiasingMode": "grayscale",
-                "closeOnExit": "always",
-                "commandline": "ssh",
-                "cursorShape": "bar",
-                "guid": "{d8f02a8f-a2ff-492b-8a04-ff31ae87c89f}",
-                "hidden": true,
-                "icon": "%AppData%/ssh.png",
-                "name": "OpenSSH",
-                "padding": "8, 8, 8, 8",
-                "suppressApplicationTitle": true,
-                "tabColor": "#477DDA"
-            },
-            {
-                "altGrAliasing": true,
-                "antialiasingMode": "grayscale",
-                "closeOnExit": "always",
-                "commandline": "wsl --distribution debian minicom --color=on",
-                "cursorShape": "bar",
-                "guid": "{04265ebb-d4ea-442d-94c2-b6a27474d891}",
-                "hidden": true,
-                "icon": "%AppData%/minicom.png",
-                "name": "minicom",
-                "padding": "8, 8, 8, 8",
-                "suppressApplicationTitle": true,
-                "tabColor": "#477DDA"
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#0C0C0C",
@@ -352,6 +366,29 @@
             "selectionBackground": "#FFFFFF",
             "white": "#D3D7CF",
             "yellow": "#C4A000"
+        },
+        {
+            "background": "#300A24",
+            "black": "#171421",
+            "blue": "#0037DA",
+            "brightBlack": "#767676",
+            "brightBlue": "#08458F",
+            "brightCyan": "#2C9FB3",
+            "brightGreen": "#26A269",
+            "brightPurple": "#A347BA",
+            "brightRed": "#C01C28",
+            "brightWhite": "#F2F2F2",
+            "brightYellow": "#A2734C",
+            "cursorColor": "#FFFFFF",
+            "cyan": "#3A96DD",
+            "foreground": "#FFFFFF",
+            "green": "#26A269",
+            "name": "Ubuntu-ColorScheme",
+            "purple": "#881798",
+            "red": "#C21A23",
+            "selectionBackground": "#FFFFFF",
+            "white": "#CCCCCC",
+            "yellow": "#A2734C"
         },
         {
             "background": "#000000",

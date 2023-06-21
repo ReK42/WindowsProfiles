@@ -10,6 +10,15 @@ Set-Alias ll Get-ChildItem -Option ReadOnly
 Set-Alias sublime "$($Env:ProgramFiles)\Sublime Text\sublime_text.exe" -Option ReadOnly
 Set-Alias vim "$($Env:ProgramFiles)\Vim\vim82\vim.exe" -Option ReadOnly
 
+function CustomizeConsole {
+  $hosttime = (Get-ChildItem -Path $PSHOME\pwsh.exe).CreationTime
+  $hostversion="$($Host.Version.Major)`.$($Host.Version.Minor)"
+  $Host.UI.RawUI.WindowTitle = "PowerShell $hostversion ($hosttime)"
+  Clear-Host
+  pfetch  # https://github.com/dylanaraps/pfetch
+}
+CustomizeConsole
+
 Function Prompt() {
     $AdminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
     $Identity = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()
@@ -222,29 +231,43 @@ Function Open-WTSSH {
 
     $Title = 'OpenSSH'
     $Skip = $false
+    $CustomTitle = $false
+    $RemoveArgs = @()
     ForEach($arg in $args) {
         if($Skip) {
             $Skip = $false
             Continue
         }
+        if($CustomTitle) {
+            $Title = $arg
+            $RemoveArgs += $arg
+            Break
+        }
         if($arg.StartsWith('-')) {
-            $Skip = $true
-            Continue
+            if($arg.ToLower() -eq '-t' -or $arg.ToLower() -eq '--title') {
+                $CustomTitle = $true
+                $RemoveArgs += $arg
+                Continue
+            } else {
+                $Skip = $true
+                Continue
+            }
         }
         if($arg.Contains('@')) {
-            $Title += ": $(($arg -split '@')[1])"
+            $Title = "$(($arg -split '@')[1])"
         } else {
-            $Title += ": $arg"
+            $Title = "$arg"
         }
         Break
     }
 
+    $FilteredArgs = $args | Where-Object {$RemoveArgs -notcontains $_}
     $ArgumentList = @(
         "--window 0",
         "new-tab",
         "--profile OpenSSH",
         "--title `"$Title`"",
-        "ssh $args"
+        "ssh $FilteredArgs"
     )
     Start-Process wt -ArgumentList $ArgumentList
 }

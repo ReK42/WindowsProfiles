@@ -15,7 +15,7 @@ function CustomizeConsole {
   $hostversion="$($Host.Version.Major)`.$($Host.Version.Minor)"
   $Host.UI.RawUI.WindowTitle = "PowerShell $hostversion ($hosttime)"
   Clear-Host
-  pfetch  # https://github.com/dylanaraps/pfetch
+  pfetch  # https://github.com/Gobidev/pfetch-rs
 }
 CustomizeConsole
 

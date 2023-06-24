@@ -1,8 +1,8 @@
 # Windows Terminal, PowerShell and OpenSSH Profiles
 ## Installation
-1. Install the dependencies listed below.
-2. Copy the files listed below to their appropriate locations.
-3. [OPTIONAL] Apply the included registry file to register Windows Terminal to automatically handle `ssh://` and `telnet://` protocol links.
+1. Install the dependencies listed below
+2. Copy the contents of `UserProfile` to `%UserProfile%`
+3. [OPTIONAL] Apply the included registry file to register Windows Terminal to automatically handle `ssh://` and `telnet://` protocol links
 
 ### Dependencies
 - PowerShell 5.1
@@ -14,12 +14,6 @@
 - [plink](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) (for `wttelnet`)
 - [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) (for `wtcom`)
 - [minicom](https://salsa.debian.org/minicom-team/minicom) (for `wtcom`)
-
-### File Locations
-- `Microsoft.PowerShell_profile.ps1` --> `%UserProfile%\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1`
-- `settings.json` --> `%UserProfile%\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json`
-- `ssh_config` --> `%UserProfile%\.ssh\config`
-- `*.png` --> `%AppData%\*.png`
 
 ## Usage
 - `wtssh`: Wrapper for OpenSSH that spawns a new tab

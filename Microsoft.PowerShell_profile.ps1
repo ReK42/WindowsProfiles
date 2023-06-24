@@ -4,16 +4,8 @@ if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
 
-Set-Alias sudo gsudo -Option ReadOnly  # https://github.com/gerardog/gsudo
-Set-Alias grep Select-String -Option ReadOnly
-Set-Alias ll Get-ChildItem -Option ReadOnly
-Set-Alias sublime "$($Env:ProgramFiles)\Sublime Text\sublime_text.exe" -Option ReadOnly
-Set-Alias vim "$($Env:ProgramFiles)\Vim\vim82\vim.exe" -Option ReadOnly
-
 function CustomizeConsole {
-  $hosttime = (Get-ChildItem -Path $PSHOME\pwsh.exe).CreationTime
-  $hostversion="$($Host.Version.Major)`.$($Host.Version.Minor)"
-  $Host.UI.RawUI.WindowTitle = "PowerShell $hostversion ($hosttime)"
+  $Host.UI.RawUI.WindowTitle = "PowerShell $($Host.Version.Major).$($Host.Version.Minor)"
   Clear-Host
   pfetch  # https://github.com/Gobidev/pfetch-rs
 }
@@ -64,6 +56,16 @@ $PSReadLineOptions.ParameterColor = "DarkGreen"
 $PSReadLineOptions.StringColor = "Blue"
 $PSReadLineOptions.TypeColor = "DarkYellow"
 $PSReadLineOptions.VariableColor = "Green"
+
+
+
+Set-Alias sudo gsudo -Option ReadOnly  # https://github.com/gerardog/gsudo
+Set-Alias grep Select-String -Option ReadOnly
+Set-Alias ll Get-ChildItem -Option ReadOnly
+Set-Alias sublime "$($Env:ProgramFiles)\Sublime Text\sublime_text.exe" -Option ReadOnly
+Set-Alias vim "$($Env:ProgramFiles)\Vim\vim82\vim.exe" -Option ReadOnly
+
+
 
 Function Compare-FileHash {
     <#
@@ -133,6 +135,8 @@ Function Compare-FileHash {
     return $Return
 }
 
+
+
 Function Get-UserPrincipalName {
     <#
     .SYNOPSIS
@@ -147,6 +151,8 @@ Function Get-UserPrincipalName {
     $obj.PropertiesToLoad.Add("userPrincipalName") | Out-Null
     return $obj.FindAll()[0].Properties.userprincipalname
 }
+
+
 
 Function Count-Lines {
     <#
@@ -171,6 +177,8 @@ Function Count-Lines {
 }
 Set-Alias wc Count-Lines -Option ReadOnly
 
+
+
 Function Get-ContentHead {
     <#
     .SYNOPSIS
@@ -192,6 +200,8 @@ Function Get-ContentHead {
     Get-Content -Path $Path -TotalCount $Lines
 }
 Set-Alias head Get-ContentHead -Option ReadOnly
+
+
 
 Function Get-ContentTail {
     <#
@@ -223,55 +233,128 @@ Function Get-ContentTail {
 }
 Set-Alias tail Get-ContentTail -Option ReadOnly
 
+
+
 Function Open-WTSSH {
     <#
     .SYNOPSIS
     Launch OpenSSH in a Windows Terminal tab
     #>
 
+    $SSHArgumentList = @()
+    $CustomTitleNext = $false
+    $ParameterNext = $false
     $Title = 'OpenSSH'
-    $Skip = $false
-    $CustomTitle = $false
-    $RemoveArgs = @()
     ForEach($arg in $args) {
-        if($Skip) {
-            $Skip = $false
-            Continue
-        }
-        if($CustomTitle) {
+        if($CustomTitleNext) {
+            $CustomTitleNext = $false
             $Title = $arg
-            $RemoveArgs += $arg
-            Break
-        }
-        if($arg.StartsWith('-')) {
-            if($arg.ToLower() -eq '-t' -or $arg.ToLower() -eq '--title') {
-                $CustomTitle = $true
-                $RemoveArgs += $arg
-                Continue
-            } else {
-                $Skip = $true
-                Continue
+        } elseif($arg.StartsWith('ssh://')) {
+            # Strip the protocol prefix and any trailing /
+            $URL = ($arg -replace '^ssh://(.*)$', '$1').TrimEnd('/')
+            if($URL.Contains(':')) {
+                $URL, $Port = $URL -split ':'
+                $SSHArgumentList += '-p'
+                $SSHArgumentList += $Port
             }
-        }
-        if($arg.Contains('@')) {
-            $Title = "$(($arg -split '@')[1])"
+            if($Title -eq 'OpenSSH') {
+                $Title = $URL
+            }
+            $SSHArgumentList += $URL
+        } elseif($arg.StartsWith('-')) {
+            if($arg.ToLower() -in '-t', '--title') {
+                $CustomTitleNext = $true
+            } else {
+                $ParameterNext = $true
+                $SSHArgumentList += $arg
+            }
         } else {
-            $Title = "$arg"
+            if($ParameterNext) {
+                $ParameterNext = $false
+            } else {
+                if($Title -eq 'OpenSSH') {
+                    $Title = $arg
+                }
+            }
+            $SSHArgumentList += $arg
         }
-        Break
     }
 
-    $FilteredArgs = $args | Where-Object {$RemoveArgs -notcontains $_}
-    $ArgumentList = @(
+    $WTArgumentList = @(
         "--window 0",
         "new-tab",
         "--profile OpenSSH",
         "--title `"$Title`"",
-        "ssh $FilteredArgs"
+        "ssh $SSHArgumentList"
     )
-    Start-Process wt -ArgumentList $ArgumentList
+    Start-Process wt -ArgumentList $WTArgumentList
 }
 Set-Alias wtssh Open-WTSSH -Option ReadOnly
+
+
+
+Function Open-WTTelnet {
+    <#
+    .SYNOPSIS
+    Launch Telnet in a Windows Terminal tab
+    #>
+
+    $TelnetArgumentList = @('-telnet')
+    $CustomTitleNext = $false
+    $ParameterNext = $false
+    $Title = 'Telnet'
+    ForEach($arg in $args) {
+        if($CustomTitleNext) {
+            $CustomTitleNext = $false
+            $Title = $arg
+        } elseif($arg.StartsWith('telnet://')) {
+            $Search = '^telnet://(?<user>.+@)?(?<host>.+?)(?<port>:.+)?$'
+            $Groups = ([regex]::Matches($arg.TrimEnd('/'), $Search)).Groups
+            ForEach($Group in $Groups) {
+                if($Group.Name -eq 'user' -and $Group.Value.Length -gt 0) {
+                    $TelnetArgumentList += '-l'
+                    $TelnetArgumentList += $Group.Value.TrimEnd('@')
+                } elseif($Group.Name -eq 'host' -and $Group.Value.Length -gt 0) {
+                    if($Title -eq 'Telnet') {
+                        $Title = $Group.Value
+                    }
+                    $TelnetArgumentList += $Group.Value
+                } elseif($Group.Name -eq 'port' -and $Group.Value.Length -gt 0) {
+                    $TelnetArgumentList += '-P'
+                    $TelnetArgumentList += $Group.Value.TrimStart(':')
+                }
+            }
+        } elseif($arg.StartsWith('-')) {
+            if($arg.ToLower() -eq '--title') {
+                $CustomTitleNext = $true
+            } else {
+                $ParameterNext = $true
+                $TelnetArgumentList += $arg
+            }
+        } else {
+            if($ParameterNext) {
+                $ParameterNext = $false
+            } else {
+                if($Title -eq 'Telnet') {
+                    $Title = $arg
+                }
+            }
+            $TelnetArgumentList += $arg
+        }
+    }
+
+    $WTArgumentList = @(
+        "--window 0",
+        "new-tab",
+        "--profile Telnet",
+        "--title `"$Title`"",
+        "plink $TelnetArgumentList"
+    )
+    Start-Process wt -ArgumentList $WTArgumentList
+}
+Set-Alias wttelnet Open-WTTelnet -Option ReadOnly
+
+
 
 Function Open-WTCOM {
     <#

@@ -1,0 +1,45 @@
+Windows Registry Editor Version 5.00
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Windows Terminal SSH Handler ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[HKEY_CURRENT_USER\Software\Classes\ssh]
+@="URL: SSH Protocol"
+"URL Protocol"=""
+
+[HKEY_CURRENT_USER\Software\Classes\wt_ssh_handler\Application]
+"ApplicationName"="Windows Terminal SSH Handler"
+"ApplicationDescription"="Windows Terminal SSH Handler"
+"ApplicationCompany"="Windows Terminal SSH Handler"
+
+[HKEY_CURRENT_USER\Software\Classes\wt_ssh_handler\Capabilities\UrlAssociations]
+"ssh"="wt_ssh_handler"
+
+[HKEY_CURRENT_USER\Software\Classes\wt_ssh_handler\shell\open\command]
+@="powershell wtssh %1"
+
+[HKEY_CURRENT_USER\Software\RegisteredApplications]
+"Windows Terminal SSH Handler"="Software\\Classes\\wt_ssh_handler\\Capabilities"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Windows Terminal Telnet Handler ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[HKEY_CURRENT_USER\Software\Classes\telnet]
+@="URL: Telnet Protocol"
+"URL Protocol"=""
+
+[HKEY_CURRENT_USER\Software\Classes\wt_telnet_handler\Application]
+"ApplicationName"="Windows Terminal Telnet Handler"
+"ApplicationDescription"="Windows Terminal Telnet Handler"
+"ApplicationCompany"="Windows Terminal Telnet Handler"
+
+[HKEY_CURRENT_USER\Software\Classes\wt_telnet_handler\Capabilities\UrlAssociations]
+"telnet"="wt_telnet_handler"
+
+[HKEY_CURRENT_USER\Software\Classes\wt_telnet_handler\shell\open\command]
+@="powershell wttelnet %1"
+
+[HKEY_CURRENT_USER\Software\RegisteredApplications]
+"Windows Terminal Telnet Handler"="Software\\Classes\\wt_telnet_handler\\Capabilities"

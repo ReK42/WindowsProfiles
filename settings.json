@@ -32,6 +32,12 @@
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "newTabMenu":
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles":
     {
         "defaults":
@@ -89,7 +95,7 @@
                 "commandline": "py",
                 "guid": "{2999f8e3-a464-4e07-864b-489ca1a99195}",
                 "hidden": false,
-                "icon": "%AppData%\\python.png",
+                "icon": "https://github.com/python/pythondotorg/raw/main/static/img/python-logo-large.png",
                 "name": "Python",
                 "tabColor": "#1E415E"
             },
@@ -100,6 +106,16 @@
                 "hidden": true,
                 "icon": "%AppData%/ssh.png",
                 "name": "OpenSSH",
+                "suppressApplicationTitle": true,
+                "tabColor": "#477DDA"
+            },
+            {
+                "closeOnExit": "always",
+                "commandline": "telnet",
+                "guid": "{cd3dff86-404d-45ed-95ad-8d6361bf4410}",
+                "hidden": true,
+                "icon": "%AppData%/telnet.png",
+                "name": "Telnet",
                 "suppressApplicationTitle": true,
                 "tabColor": "#477DDA"
             },
@@ -146,13 +162,13 @@
             },
             {
                 "guid": "{88cb020a-b12a-5662-8c06-fd2072970994}",
-                "hidden": false,
+                "hidden": true,
                 "name": "Developer Command Prompt for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
                 "guid": "{ffce01ef-7822-5b3c-ba4d-29fb783295b4}",
-                "hidden": false,
+                "hidden": true,
                 "name": "Developer PowerShell for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
             }
@@ -416,7 +432,51 @@
     ],
     "showTerminalTitleInTitlebar": true,
     "theme": "system",
-    "themes": [],
+    "themes":
+    [
+        {
+            "name": "legacyDark",
+            "tab":
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window":
+            {
+                "applicationTheme": "dark",
+                "useMica": false
+            }
+        },
+        {
+            "name": "legacyLight",
+            "tab":
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window":
+            {
+                "applicationTheme": "light",
+                "useMica": false
+            }
+        },
+        {
+            "name": "legacySystem",
+            "tab":
+            {
+                "background": null,
+                "showCloseButton": "always",
+                "unfocusedBackground": null
+            },
+            "window":
+            {
+                "applicationTheme": "system",
+                "useMica": false
+            }
+        }
+    ],
     "trimBlockSelection": true,
     "useAcrylicInTabRow": false,
     "windowingBehavior": "useAnyExisting"

@@ -307,7 +307,7 @@ Function Open-WTTelnet {
         if($CustomTitleNext) {
             $CustomTitleNext = $false
             $Title = $arg
-        } elseif($arg.StartsWith('telnet://')) {
+        } elseif($arg -is [string] -and $arg.StartsWith('telnet://')) {
             $Search = '^telnet://(?<user>.+@)?(?<host>.+?)(?<port>:.+)?$'
             $Groups = ([regex]::Matches($arg.TrimEnd('/'), $Search)).Groups
             ForEach($Group in $Groups) {
@@ -324,7 +324,7 @@ Function Open-WTTelnet {
                     $TelnetArgumentList += $Group.Value.TrimStart(':')
                 }
             }
-        } elseif($arg.StartsWith('-')) {
+        } elseif($arg -is [string] -and $arg.StartsWith('-')) {
             if($arg.ToLower() -eq '--title') {
                 $CustomTitleNext = $true
             } else {

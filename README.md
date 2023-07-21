@@ -10,6 +10,7 @@
 - [Chocolatey](https://chocolatey.org)
 - [gsudo](https://github.com/gerardog/gsudo)
 - [pfetch-rs](https://github.com/Gobidev/pfetch-rs)
+- [oh-my-posh](https://ohmyposh.dev/)
 - [OpenSSH Client](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=gui#tabpanel_1_gui) (for `wtssh`)
 - [plink](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) (for `wttelnet`)
 - [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) (for `wtcom`)
@@ -41,5 +42,5 @@
     - `sudo` --> `gsudo`
     - `grep` --> `Select-String`
     - `ll` --> `Get-ChildItem`
-    - `sublime` --> [Sublime Text](https://www.sublimetext.com/)
+    - `subl|sublime` --> [Sublime Text](https://www.sublimetext.com/)
     - `vim` --> [VIM](https://www.vim.org/)

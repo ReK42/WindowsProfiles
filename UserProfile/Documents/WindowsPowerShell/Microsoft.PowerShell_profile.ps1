@@ -1,34 +1,19 @@
+Clear-Host
+pfetch
+oh-my-posh init pwsh --config "$($Env:UserProfile)\.omp.yml" | Invoke-Expression
+
+Import-Module "gsudoModule"
+Set-Alias sudo gsudo -Option ReadOnly  # https://github.com/gerardog/gsudo
+Set-Alias grep Select-String -Option ReadOnly
+Set-Alias ll Get-ChildItem -Option ReadOnly
+Set-Alias sublime "$($Env:ProgramFiles)\Sublime Text\sublime_text.exe" -Option ReadOnly
+Set-Alias subl sublime -Option ReadOnly
+Set-Alias vim "$($Env:ProgramFiles)\Vim\vim82\vim.exe" -Option ReadOnly
+
 # Chocolatey profile
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+$ChocolateyProfile = "$($Env:ChocolateyInstall)\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
-}
-
-function CustomizeConsole {
-  $Host.UI.RawUI.WindowTitle = "PowerShell $($Host.Version.Major).$($Host.Version.Minor)"
-  Clear-Host
-  pfetch  # https://github.com/Gobidev/pfetch-rs
-}
-CustomizeConsole
-
-Function Prompt() {
-    $AdminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
-    $Identity = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()
-    $PromptCWD = $PWD.ProviderPath.replace($Env:UserProfile, "~")
-
-    Write-Host "[" -NoNewLine
-    Write-Host $Env:UserName -NoNewLine -ForegroundColor "Green"
-    Write-Host "@" -NoNewLine
-    Write-Host $Env:ComputerName -NoNewLine -ForegroundColor "Green"
-    Write-Host " " -NoNewLine
-    Write-Host $PromptCWD -NoNewLine -ForegroundColor "Blue"
-    Write-Host "]" -NoNewLine
-    if ($Identity.IsInRole($AdminRole)) {
-        Write-Host "#" -NoNewLine -ForegroundColor "Red"
-    } else {
-        Write-Host "$" -NoNewLine
-    }
-    return " "
 }
 
 # Configure highlighting for dark terminal themes
@@ -56,14 +41,6 @@ $PSReadLineOptions.ParameterColor = "DarkGreen"
 $PSReadLineOptions.StringColor = "Blue"
 $PSReadLineOptions.TypeColor = "DarkYellow"
 $PSReadLineOptions.VariableColor = "Green"
-
-
-
-Set-Alias sudo gsudo -Option ReadOnly  # https://github.com/gerardog/gsudo
-Set-Alias grep Select-String -Option ReadOnly
-Set-Alias ll Get-ChildItem -Option ReadOnly
-Set-Alias sublime "$($Env:ProgramFiles)\Sublime Text\sublime_text.exe" -Option ReadOnly
-Set-Alias vim "$($Env:ProgramFiles)\Vim\vim82\vim.exe" -Option ReadOnly
 
 
 

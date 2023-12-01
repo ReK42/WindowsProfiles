@@ -1,20 +1,44 @@
+$Host.UI.RawUI.WindowTitle = "PowerShell $($Host.Version.Major).$($Host.Version.Minor)"
 Clear-Host
-pfetch
-oh-my-posh init pwsh --config "$($Env:UserProfile)\.omp.yml" | Invoke-Expression
+pfetch  # https://github.com/Gobidev/pfetch-rs
 
+Function Prompt() {
+    $AdminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
+    $Identity = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()
+    $PromptCWD = $PWD.ProviderPath.replace($Env:UserProfile, "~")
+
+    Write-Host "[" -NoNewLine
+    Write-Host $Env:UserName -NoNewLine -ForegroundColor "Green"
+    Write-Host "@" -NoNewLine
+    Write-Host $Env:ComputerName -NoNewLine -ForegroundColor "Green"
+    Write-Host " " -NoNewLine
+    Write-Host $PromptCWD -NoNewLine -ForegroundColor "Blue"
+    Write-Host "]" -NoNewLine
+    if ($Identity.IsInRole($AdminRole)) {
+        Write-Host "#" -NoNewLine -ForegroundColor "Red"
+    }
+    else {
+        Write-Host "$" -NoNewLine
+    }
+    return " "
+}
+
+# Chocolatey profile
+$ChocolateyProfile = "$($Env:ChocolateyInstall)\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+    Import-Module "$ChocolateyProfile"
+}
+
+# gsudo module and alias
 Import-Module "gsudoModule"
 Set-Alias sudo gsudo -Option ReadOnly  # https://github.com/gerardog/gsudo
+
+# Other aliases
 Set-Alias grep Select-String -Option ReadOnly
 Set-Alias ll Get-ChildItem -Option ReadOnly
 Set-Alias sublime "$($Env:ProgramFiles)\Sublime Text\sublime_text.exe" -Option ReadOnly
 Set-Alias subl sublime -Option ReadOnly
 Set-Alias vim "$($Env:ProgramFiles)\Vim\vim82\vim.exe" -Option ReadOnly
-
-# Chocolatey profile
-$ChocolateyProfile = "$($Env:ChocolateyInstall)\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
-}
 
 # Configure highlighting for dark terminal themes
 $Host.PrivateData.ErrorForegroundColor = "Red"
@@ -52,12 +76,12 @@ Function Compare-FileHash {
 
     param (
         [cmdletbinding(
-            DefaultParameterSetName="String"
+            DefaultParameterSetName = "String"
         )]
 
         [Parameter(
-            Mandatory=$false,
-            HelpMessage='Hash algorithm to use'
+            Mandatory = $false,
+            HelpMessage = 'Hash algorithm to use'
         )]
         [ValidateSet(
             "SHA1",
@@ -71,29 +95,29 @@ Function Compare-FileHash {
         [System.String]$Algorithm = "SHA256",
 
         [Parameter(
-            Position=0,
-            Mandatory=$true,
-            HelpMessage='File path'
+            Position = 0,
+            Mandatory = $true,
+            HelpMessage = 'File path'
         )]
         [ValidateNotNullOrEmpty()]
         [System.IO.FileInfo]$Path1,
 
         [Parameter(
-            Position=1,
-            Mandatory=$true,
-            HelpMessage='Hash string to compare against',
-            ParameterSetName="String",
-            ValueFromPipeline=$true
+            Position = 1,
+            Mandatory = $true,
+            HelpMessage = 'Hash string to compare against',
+            ParameterSetName = "String",
+            ValueFromPipeline = $true
         )]
         [ValidateNotNullOrEmpty()]
         [System.String]$Hash,
 
         [Parameter(
-            Position=1,
-            Mandatory=$true,
-            HelpMessage='File to compare against',
-            ParameterSetName="File",
-            ValueFromPipeline=$true
+            Position = 1,
+            Mandatory = $true,
+            HelpMessage = 'File to compare against',
+            ParameterSetName = "File",
+            ValueFromPipeline = $true
         )]
         [ValidateNotNullOrEmpty()]
         [System.IO.FileInfo]$Path2
@@ -102,10 +126,11 @@ Function Compare-FileHash {
     [hashtable]$Return = @{}
     $Return.Algorithm = $Algorithm
     $Return.File1Hash = (Get-FileHash -Algorithm "$Algorithm" -Path "$Path1").Hash.Trim().ToLower()
-    if($Hash) {
+    if ($Hash) {
         $Return.Hash = $Hash.Trim().ToLower()
         $Return.Match = ($Return.File1Hash -eq $Return.Hash)
-    } else {
+    }
+    else {
         $Return.File2Hash = (Get-FileHash -Algorithm "$Algorithm" -Path "$Path2").Hash.Trim().ToLower()
         $Return.Match = ($Return.File1Hash -eq $Return.File2Hash)
     }
@@ -139,9 +164,9 @@ Function Count-Lines {
 
     param (
         [Parameter(
-            Mandatory=$true,
-            ValueFromPipeline=$true,
-            HelpMessage='File path'
+            Mandatory = $true,
+            ValueFromPipeline = $true,
+            HelpMessage = 'File path'
         )][ValidateNotNullOrEmpty()][System.IO.FileInfo]$Path
     )
 
@@ -164,13 +189,13 @@ Function Get-ContentHead {
 
     param (
         [Parameter(
-            Mandatory=$true,
-            ValueFromPipeline=$true,
-            HelpMessage='File path'
+            Mandatory = $true,
+            ValueFromPipeline = $true,
+            HelpMessage = 'File path'
         )][ValidateNotNullOrEmpty()][System.IO.FileInfo]$Path,
         [Parameter(
-            Mandatory=$false,
-            HelpMessage='Number of lines'
+            Mandatory = $false,
+            HelpMessage = 'Number of lines'
         )][ValidateNotNullOrEmpty()][Int]$Lines = 10
     )
 
@@ -188,23 +213,24 @@ Function Get-ContentTail {
 
     param (
         [Parameter(
-            Mandatory=$true,
-            ValueFromPipeline=$true,
-            HelpMessage='File path'
+            Mandatory = $true,
+            ValueFromPipeline = $true,
+            HelpMessage = 'File path'
         )][ValidateNotNullOrEmpty()][System.IO.FileInfo]$Path,
         [Parameter(
-            Mandatory=$false,
-            HelpMessage='Number of lines'
+            Mandatory = $false,
+            HelpMessage = 'Number of lines'
         )][ValidateNotNullOrEmpty()][Int]$Lines = 10,
         [Parameter(
-            Mandatory=$false,
-            HelpMessage='Continue to follow'
+            Mandatory = $false,
+            HelpMessage = 'Continue to follow'
         )][Switch]$Follow
     )
 
-    if($Follow) {
+    if ($Follow) {
         Get-Content -Path $Path -Tail $Lines -Wait
-    } else {
+    }
+    else {
         Get-Content -Path $Path -Tail $Lines
     }
 }
@@ -222,38 +248,44 @@ Function Open-WTSSH {
     $CustomTitleNext = $false
     $ParameterNext = $false
     $Title = 'OpenSSH'
-    ForEach($arg in $args) {
-        if($CustomTitleNext) {
+    ForEach ($arg in $args) {
+        $arg_s = $arg.ToString()
+        if ($CustomTitleNext) {
             $CustomTitleNext = $false
-            $Title = $arg
-        } elseif($arg.StartsWith('ssh://')) {
+            $Title = $arg_s
+        }
+        elseif ($arg_s.StartsWith('ssh://')) {
             # Strip the protocol prefix and any trailing /
-            $URL = ($arg -replace '^ssh://(.*)$', '$1').TrimEnd('/')
-            if($URL.Contains(':')) {
+            $URL = ($arg_s -replace '^ssh://(.*)$', '$1').TrimEnd('/')
+            if ($URL.Contains(':')) {
                 $URL, $Port = $URL -split ':'
                 $SSHArgumentList += '-p'
                 $SSHArgumentList += $Port
             }
-            if($Title -eq 'OpenSSH') {
+            if ($Title -eq 'OpenSSH') {
                 $Title = $URL
             }
             $SSHArgumentList += $URL
-        } elseif($arg.StartsWith('-')) {
-            if($arg.ToLower() -in '-t', '--title') {
+        }
+        elseif ($arg_s.StartsWith('-')) {
+            if ($arg_s.ToLower() -in '-t', '--title') {
                 $CustomTitleNext = $true
-            } else {
-                $ParameterNext = $true
-                $SSHArgumentList += $arg
             }
-        } else {
-            if($ParameterNext) {
+            else {
+                $ParameterNext = $true
+                $SSHArgumentList += $arg_s
+            }
+        }
+        else {
+            if ($ParameterNext) {
                 $ParameterNext = $false
-            } else {
-                if($Title -eq 'OpenSSH') {
-                    $Title = $arg
+            }
+            else {
+                if ($Title -eq 'OpenSSH') {
+                    $Title = $arg_s
                 }
             }
-            $SSHArgumentList += $arg
+            $SSHArgumentList += $arg_s
         }
     }
 
@@ -280,39 +312,46 @@ Function Open-WTTelnet {
     $CustomTitleNext = $false
     $ParameterNext = $false
     $Title = 'Telnet'
-    ForEach($arg in $args) {
-        if($CustomTitleNext) {
+    ForEach ($arg in $args) {
+        if ($CustomTitleNext) {
             $CustomTitleNext = $false
             $Title = $arg
-        } elseif($arg -is [string] -and $arg.StartsWith('telnet://')) {
+        }
+        elseif ($arg -is [string] -and $arg.StartsWith('telnet://')) {
             $Search = '^telnet://(?<user>.+@)?(?<host>.+?)(?<port>:.+)?$'
             $Groups = ([regex]::Matches($arg.TrimEnd('/'), $Search)).Groups
-            ForEach($Group in $Groups) {
-                if($Group.Name -eq 'user' -and $Group.Value.Length -gt 0) {
+            ForEach ($Group in $Groups) {
+                if ($Group.Name -eq 'user' -and $Group.Value.Length -gt 0) {
                     $TelnetArgumentList += '-l'
                     $TelnetArgumentList += $Group.Value.TrimEnd('@')
-                } elseif($Group.Name -eq 'host' -and $Group.Value.Length -gt 0) {
-                    if($Title -eq 'Telnet') {
+                }
+                elseif ($Group.Name -eq 'host' -and $Group.Value.Length -gt 0) {
+                    if ($Title -eq 'Telnet') {
                         $Title = $Group.Value
                     }
                     $TelnetArgumentList += $Group.Value
-                } elseif($Group.Name -eq 'port' -and $Group.Value.Length -gt 0) {
+                }
+                elseif ($Group.Name -eq 'port' -and $Group.Value.Length -gt 0) {
                     $TelnetArgumentList += '-P'
                     $TelnetArgumentList += $Group.Value.TrimStart(':')
                 }
             }
-        } elseif($arg -is [string] -and $arg.StartsWith('-')) {
-            if($arg.ToLower() -eq '--title') {
+        }
+        elseif ($arg -is [string] -and $arg.StartsWith('-')) {
+            if ($arg.ToLower() -eq '--title') {
                 $CustomTitleNext = $true
-            } else {
+            }
+            else {
                 $ParameterNext = $true
                 $TelnetArgumentList += $arg
             }
-        } else {
-            if($ParameterNext) {
+        }
+        else {
+            if ($ParameterNext) {
                 $ParameterNext = $false
-            } else {
-                if($Title -eq 'Telnet') {
+            }
+            else {
+                if ($Title -eq 'Telnet') {
                     $Title = $arg
                 }
             }
@@ -341,13 +380,13 @@ Function Open-WTCOM {
 
     param (
         [Parameter(
-            Mandatory=$false,
-            ValueFromPipeline=$true,
-            HelpMessage='COM port to connect to'
+            Mandatory = $false,
+            ValueFromPipeline = $true,
+            HelpMessage = 'COM port to connect to'
         )][ValidateNotNullOrEmpty()][Int]$Port = 4,
         [Parameter(
-            Mandatory=$false,
-            HelpMessage='WSL distribution to launch'
+            Mandatory = $false,
+            HelpMessage = 'WSL distribution to launch'
         )][ValidateNotNullOrEmpty()][System.String]$Distribution = 'debian'
     )
 
@@ -358,7 +397,7 @@ Function Open-WTCOM {
     }
 
     # Make sure the requested distribution is availble
-    if($Distributions -contains $Distribution.ToLower()) {
+    if ($Distributions -contains $Distribution.ToLower()) {
         $ArgumentList = @(
             "new-tab",
             "--profile minicom",
@@ -366,7 +405,8 @@ Function Open-WTCOM {
             "wsl --distribution $Distribution minicom --color=on --device /dev/ttyS$Port"
         )
         Start-Process wt -ArgumentList $ArgumentList
-    } else {
+    }
+    else {
         Write-Error "Distribution $Distribution not found"
     }
 }

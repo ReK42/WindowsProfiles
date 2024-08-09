@@ -71,14 +71,10 @@ $PSReadLineOptions.VariableColor = "Green"
 Function Compare-FileHash {
     <#
     .SYNOPSIS
-    Compare a file's hash to a string or another file
+    Compare a file's hash to another file or a string
     #>
 
     param (
-        [cmdletbinding(
-            DefaultParameterSetName = "String"
-        )]
-
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Hash algorithm to use'
@@ -97,44 +93,34 @@ Function Compare-FileHash {
         [Parameter(
             Position = 0,
             Mandatory = $true,
-            HelpMessage = 'File path'
+            HelpMessage = 'File path',
+            ValueFromPipeline = $true
         )]
         [ValidateNotNullOrEmpty()]
-        [System.IO.FileInfo]$Path1,
+        [System.IO.FileInfo]$Path,
 
         [Parameter(
             Position = 1,
             Mandatory = $true,
-            HelpMessage = 'Hash string to compare against',
-            ParameterSetName = "String",
-            ValueFromPipeline = $true
+            HelpMessage = 'File or hash string to compare against'
         )]
         [ValidateNotNullOrEmpty()]
-        [System.String]$Hash,
-
-        [Parameter(
-            Position = 1,
-            Mandatory = $true,
-            HelpMessage = 'File to compare against',
-            ParameterSetName = "File",
-            ValueFromPipeline = $true
-        )]
-        [ValidateNotNullOrEmpty()]
-        [System.IO.FileInfo]$Path2
+        [System.String]$Compare
     )
 
-    [hashtable]$Return = @{}
-    $Return.Algorithm = $Algorithm
-    $Return.File1Hash = (Get-FileHash -Algorithm "$Algorithm" -Path "$Path1").Hash.Trim().ToLower()
-    if ($Hash) {
-        $Return.Hash = $Hash.Trim().ToLower()
-        $Return.Match = ($Return.File1Hash -eq $Return.Hash)
+    $Hash1 = (Get-FileHash -Algorithm "$Algorithm" -Path "$Path").Hash.Trim().ToLower()
+    if (Test-Path -Path $Compare -PathType Leaf) {
+        $Hash2 = (Get-FileHash -Algorithm "$Algorithm" -Path "$Compare").Hash.Trim().ToLower()
+    } elseif ($Compare -match '^[0-9a-fA-F]+$') {
+        $Hash2 = $Compare.Trim().ToLower()
     }
-    else {
-        $Return.File2Hash = (Get-FileHash -Algorithm "$Algorithm" -Path "$Path2").Hash.Trim().ToLower()
-        $Return.Match = ($Return.File1Hash -eq $Return.File2Hash)
+    if ([Environment]::UserInteractive -and -not ([Environment]::GetCommandLineArgs() | Where-Object {$_ -like "-NonI*"})) {
+        Write-Host "Algorithm: $Algorithm"
+        Write-Host "Hash 1   : $Hash1"
+        Write-Host "Hash 2   : $Hash2"
+        Write-Host "Match    : " -NoNewLine
     }
-    return $Return
+    return ($Hash1 -eq $Hash2)
 }
 
 

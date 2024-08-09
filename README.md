@@ -32,9 +32,8 @@
     - Requires that the serial port `COMX` is correctly forwarded to the WSL device `/dev/ttySX`
 - `Compare-FileHash`: Compare two files, or a file to a hash string
     - `-Algorithm`: Hash algorithm to use, default: `SHA256`
-    - `-Hash`: Hash string to compare against
-    - `-Path1`: First (or only) file to compare
-    - `-Path2`: Second file to compare
+    - `-Path`: Path to the first (or only) file to compare, may also be piped in via stdin
+    - `-Compare`: Path to the second file, or a hash string, to compare against
 - Other Utilities:
     - `head`, `tail`, `wc`: Super basic clones of standard POSIX tools
     - `Get-UpserPrincipleName`: Get the UPN of the current user

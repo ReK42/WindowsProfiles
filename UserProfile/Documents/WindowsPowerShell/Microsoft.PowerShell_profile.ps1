@@ -23,12 +23,6 @@ Function Prompt() {
     return " "
 }
 
-# Chocolatey profile
-$ChocolateyProfile = "$($Env:ChocolateyInstall)\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-    Import-Module "$ChocolateyProfile"
-}
-
 # gsudo module and alias
 Import-Module "gsudoModule"
 Set-Alias sudo gsudo -Option ReadOnly  # https://github.com/gerardog/gsudo
@@ -36,9 +30,59 @@ Set-Alias sudo gsudo -Option ReadOnly  # https://github.com/gerardog/gsudo
 # Other aliases
 Set-Alias grep Select-String -Option ReadOnly
 Set-Alias ll Get-ChildItem -Option ReadOnly
+Set-Alias which Get-Command -Option ReadOnly
 Set-Alias sublime "$($Env:ProgramFiles)\Sublime Text\sublime_text.exe" -Option ReadOnly
 Set-Alias subl sublime -Option ReadOnly
-Set-Alias vim "$($Env:ProgramFiles)\Vim\vim82\vim.exe" -Option ReadOnly
+
+# WSL aliases
+Function Start-WSL() {
+    param (
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = 'WSL distribution to launch'
+        )][ValidateNotNullOrEmpty()][System.String]$Distribution = 'rocky',
+        [Parameter(
+            Mandatory = $true,
+            Position = 0,
+            HelpMessage = 'Command to call'
+        )][ValidateNotNullOrEmpty()][System.String]$Command,
+        [Parameter(
+            Mandatory = $false,
+            Position = 1,
+            ValueFromRemainingArguments = $true
+        )]$Arguments
+    )
+
+    # Get a list of available WSL distributions
+    $Distributions = @()
+    (wsl --list --verbose) | Select-Object -Skip 1 | Where-Object Length -GT 1 | ForEach-Object {
+        $Distributions += ($_.Split(' ') | Where-Object Length -GT 1)[1].ToLower()
+    }
+
+    # Make sure the requested distribution is available
+    if ($Distributions -contains $Distribution.ToLower()) {
+        # Launch
+        $ArgumentList = @(
+            "--distribution $Distribution",
+            "$Command",
+            "$Arguments"
+        )
+        Start-Process wsl -ArgumentList $ArgumentList -Wait -NoNewWindow
+    }
+    else {
+        Write-Error "WSL distribution $Distribution not found"
+    }
+}
+Function func_dig {Start-WSL dig -Arguments $args}
+Set-Alias dig func_dig -Option ReadOnly
+Function func_whois {Start-WSL whois -Arguments $args}
+Set-Alias whois func_whois -Option ReadOnly
+Function func_bgpq3 {Start-WSL bgpq3 -Arguments $args}
+Set-Alias bgpq3 func_bgpq3 -Option ReadOnly
+Function func_bgpq4 {Start-WSL bgpq4 -Arguments $args}
+Set-Alias bgpq4 func_bgpq4 -Option ReadOnly
+Function func_mtr {Start-WSL mtr -Arguments $args}
+Set-Alias mtr func_mtr -Option ReadOnly
 
 # Configure highlighting for dark terminal themes
 $Host.PrivateData.ErrorForegroundColor = "Red"

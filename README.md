@@ -7,7 +7,6 @@
 ### Dependencies
 - PowerShell 5.1
 - [Windows Terminal](https://aka.ms/terminal)
-- [Chocolatey](https://chocolatey.org)
 - [gsudo](https://github.com/gerardog/gsudo)
 - [pfetch-rs](https://github.com/Gobidev/pfetch-rs)
 - [OpenSSH Client](https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=gui#tabpanel_1_gui) (for `wtssh`)
@@ -36,10 +35,16 @@
     - `-Compare`: Path to the second file, or a hash string, to compare against
 - Other Utilities:
     - `head`, `tail`, `wc`: Super basic clones of standard POSIX tools
-    - `Get-UpserPrincipleName`: Get the UPN of the current user
+    - `Get-UserPrincipleName`: Get the UPN of the current user
+- WSL Aliases:
+    - Note: All WSL aliases use a distribution named `rocky` by default. That distribution must exist and have the below tools installed for these to function.
+    - `dig`
+    - `whois`
+    - `bgpq3|bgpq4`
+    - `mtr`
 - Other Aliases:
     - `sudo` --> `gsudo`
     - `grep` --> `Select-String`
     - `ll` --> `Get-ChildItem`
+    - `which` --> `Get-Command`
     - `subl|sublime` --> [Sublime Text](https://www.sublimetext.com/)
-    - `vim` --> [VIM](https://www.vim.org/)

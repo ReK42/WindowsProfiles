@@ -2,16 +2,27 @@
 ## Installation
 1. Install the dependencies listed below
 2. Copy the contents of `UserProfile` to `%UserProfile%`
-3. [OPTIONAL] Apply the included registry file to register Windows Terminal to automatically handle `ssh://` and `telnet://` protocol links
+3. Copy the contents of `WSLHome` to `~` inside the WSL image
+4. [OPTIONAL] Apply the included registry file to register Windows Terminal to automatically handle `ssh://` and `telnet://` protocol links
 
 ### Dependencies
+#### Host
 - PowerShell 5.1
 - Windows Terminal
+- OpenSSH Client
 - [CaskaydiaCove Nerd Font](https://www.nerdfonts.com/)
 - [fastfetch](https://github.com/fastfetch-cli/fastfetch)
-- OpenSSH Client (for `wtssh`)
 - [plink](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) (for `wttelnet` and `wtcom`)
-- [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) (for `bgpq4`, `dig`, `mtr`, and `whois`)
+
+#### WSL
+- [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
+- [Rocky Linux WSL Image](https://rockylinux.org)
+- `bgpq4`, `fastfetch`, `iperf3`, `mtr`:
+```
+sudo dnf config-manager --set-enabled crb
+sudo dnf install epel-release iperf3 mtr
+sudo dnf install bgpq4 fastfetch
+```
 
 ## Usage
 - Aliases:
@@ -20,11 +31,12 @@
     - `subl|sublime` --> [Sublime Text](https://www.sublimetext.com/)
     - `which` --> `Get-Command`
 - WSL Aliases:
-    - **Note:** All WSL aliases use a distribution named `rocky` by default. That distribution must exist and have the below tools installed for these to function.
     - `bgpq4`
     - `dig`
+    - `iperf3`
     - `mtr`
     - `whois`
+    - **Note:** All WSL aliases use a distribution named `rocky` by default. That distribution must exist and have the above tools installed for these to function.
 - `wtssh`: Wrapper for OpenSSH that spawns a new tab
     - `-t`, `--title`: Set a custom title for the tab
     - Parses an SSH URI argument (`ssh://`)

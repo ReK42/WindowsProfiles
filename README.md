@@ -1,4 +1,18 @@
 # Windows Terminal, PowerShell and OpenSSH Profiles
+
+![Using WSL tools and opening SSH and Telnet sessions from PowerShell](img/1.png)
+*Opening SSH and Telnet sessions and using WSL tools from PowerShell*
+
+![An SSH session](img/2.png)
+*An SSH session*
+
+![A Telnet session](img/3.png)
+*A Telnet session*
+
+![A PowerShell session with administrative privileges](img/4.png)
+*A PowerShell session with administrative privileges*
+
+
 ## Installation
 1. Install the dependencies listed below
 2. Copy the contents of `UserProfile` to `%UserProfile%`

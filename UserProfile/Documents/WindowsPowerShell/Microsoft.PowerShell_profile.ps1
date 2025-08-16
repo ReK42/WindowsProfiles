@@ -72,10 +72,12 @@ Set-Alias wc Count-Lines -Option ReadOnly
 # WSL aliases
 Set-Alias bgpq4 wsl_bgpq4 -Option ReadOnly
 Set-Alias dig wsl_dig -Option ReadOnly
+Set-Alias iperf3 wsl_iperf3 -Option ReadOnly
 Set-Alias mtr wsl_mtr -Option ReadOnly
 Set-Alias whois wsl_whois -Option ReadOnly
 Function wsl_bgpq4 {Start-WSL bgpq4 -Arguments $args}
 Function wsl_dig {Start-WSL dig -Arguments $args}
+Function wsl_iperf3 {Start-WSL iperf3 -Arguments $args}
 Function wsl_mtr {Start-WSL mtr -Arguments $args}
 Function wsl_whois {Start-WSL whois -Arguments $args}
 
